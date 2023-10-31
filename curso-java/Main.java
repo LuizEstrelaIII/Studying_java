@@ -1,51 +1,37 @@
-import java.util.Scanner;
 import java.util.Date;
+import java.util.Scanner;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
-    public static void main(String [] args) throws ParseException{
-        Scanner sc = new Scanner(System.in);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    public static void main(String [] args) throws ParseException {
 
-        System.out.print("Enter department's name: ");
-		String departmentName = sc.nextLine();
-		System.out.println("Enter worker data:");
-		System.out.print("Name: ");
-		String workerName = sc.nextLine();
-		System.out.print("Level: ");
-		String workerLevel = sc.nextLine();
-		System.out.print("Base salary: ");
-		double baseSalary = sc.nextDouble();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Scanner sc = new Scanner (System.in);
+        Comment c1 = new Comment("have a nice trip");
+        Comment c2 = new Comment("wow! thats awesome!");
 
-        Worker worker = new Worker(workerName, WorkerLevel.valueOf(workerLevel), baseSalary, new Department(departmentName));
+        Post p1 = new Post(sdf.parse("21/06/2018 13:05:44"), 
+        "Traveling to New Zealand", 
+        "I'm going to visit this wonderful country!", 
+        12);
 
-        System.out.print("How many contracts to this worker? ");
-		int n = sc.nextInt();
+        p1.addComment(c1);
+		p1.addComment(c2);
 
-        for (int i=1; i<=n; i++) {
-			System.out.println("Enter contract #" + i + " data:");
-			System.out.print("Date (DD/MM/YYYY): ");
-			Date contractDate = sdf.parse(sc.next());
-			System.out.print("Value per hour: ");
-			double valuePerHour = sc.nextDouble();
-			System.out.print("Duration (hours): ");
-			int hours = sc.nextInt();
-			HourContract contract = new HourContract(contractDate, valuePerHour, hours);
-			worker.addContract(contract);
-		}
-
-        System.out.println();
-		System.out.print("Enter month and year to calculate income (MM/YYYY): ");
-		String monthAndYear = sc.next();
-        int month = Integer.parseInt(monthAndYear.substring(0, 2));
-		int year = Integer.parseInt(monthAndYear.substring(3));
-
-        System.out.println("Name: " + worker.getName());
-		System.out.println("Department: " + worker.getDepartment().getName());
-		System.out.println("Income for " + monthAndYear + ": " + String.format("%.2f", worker.income(year, month)));
-
-        sc.close();
+        Comment c3 = new Comment("Good night");
+		Comment c4 = new Comment("May the Force be with you");
+		Post p2 = new Post(
+				sdf.parse("28/07/2018 23:14:19"), 
+				"Good night guys", 
+				"See you tomorrow", 
+				5);
+		p2.addComment(c3);
+		p2.addComment(c4);
+		
+		System.out.println(p1);
+		System.out.println(p2);
     }
 }
